@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
+@Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class Repository(private val database: LocalDatabase) {
 
     enum class FilterBy { TODAY, WEEK, SAVED }

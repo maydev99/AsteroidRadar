@@ -1,7 +1,6 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,31 +16,26 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
         binding.asteroidRecycler.adapter = MainAdapter(OnClickListener {
-            viewModel.displayPropertyDetails(it)
+            viewModel.shoeAsteroidDetails(it)
         })
         setHasOptionsMenu(true)
 
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-                viewModel.displayPropertyDetailsComplete()
+                viewModel.shoeAsteroidDetailsComplete()
             }
         })
 
-
-
         return binding.root
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -51,9 +45,15 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.show_week_menu -> viewModel.addFilter(Repository.FilterBy.WEEK)
-            R.id.show_today_menu -> viewModel.addFilter(Repository.FilterBy.TODAY)
-            R.id.show_saved_menu -> viewModel.addFilter(Repository.FilterBy.SAVED)
+            R.id.show_week_menu -> {
+                viewModel.addFilter(Repository.FilterBy.WEEK)
+            }
+            R.id.show_today_menu -> {
+                viewModel.addFilter(Repository.FilterBy.TODAY)
+            }
+            R.id.show_saved_menu -> {
+                viewModel.addFilter(Repository.FilterBy.SAVED)
+            }
         }
         return true
     }

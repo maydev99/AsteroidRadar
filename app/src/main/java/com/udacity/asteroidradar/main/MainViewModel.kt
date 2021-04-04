@@ -1,7 +1,6 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,11 +27,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun displayPropertyDetails(asteroid: Asteroid) {
+    fun shoeAsteroidDetails(asteroid: Asteroid) {
         _navigateToSelectedProperty.value = asteroid
     }
 
-    fun displayPropertyDetailsComplete() {
+    fun shoeAsteroidDetailsComplete() {
         _navigateToSelectedProperty.value = null
     }
 
