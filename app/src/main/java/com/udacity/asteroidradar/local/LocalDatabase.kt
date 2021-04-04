@@ -12,6 +12,15 @@ interface AsteroidDao {
 
     @Query("SELECT * FROM AsteroidEntity ORDER BY closeApproachDate ASC")
     fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
+
+    @Query("SELECT * FROM AsteroidEntity WHERE closeApproachDate = :today")
+    fun getTodaysAsteroids(today: String): LiveData<List<AsteroidEntity>>
+
+    @Query("select * from AsteroidEntity where closeApproachDate between :startDate and :endDate")
+    fun getWeeksAsteroids(startDate: String, endDate: String): LiveData<List<AsteroidEntity>>
+
+    @Query("delete from AsteroidEntity where closeApproachDate < :days")
+    fun deleteOldAsteroids(days: String)
 }
 
 @Dao
@@ -19,7 +28,7 @@ interface PictureOfDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPicture(vararg picture: PictureOfDayEntity)
 
-    @Query("SELECT * FROM pictureofdayentity")
+    @Query("SELECT * FROM PictureOfDayEntity")
     fun getPictureOfDay(): LiveData<PictureOfDayEntity>
 
 

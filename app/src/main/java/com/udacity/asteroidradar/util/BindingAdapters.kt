@@ -61,11 +61,8 @@ fun bindTitleToTitleTextView(textView: TextView, title: String?) {
 
 @BindingAdapter("setRecyclerView")
 fun bindRecyclerView(recyclerView: RecyclerView, asteroidsData: List<Asteroid>?) {
-
-
     val adapter = recyclerView.adapter as MainAdapter
     adapter.submitList(asteroidsData)
-
 }
 
 

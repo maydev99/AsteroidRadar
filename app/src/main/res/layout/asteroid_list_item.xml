@@ -26,7 +26,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/default_text_color"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="68347(2001 KB67)" />
@@ -41,7 +41,7 @@
             android:layout_marginBottom="8dp"
             android:textColor="@color/text_grey"
             android:text="@{asteroid.closeApproachDate}"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_name_text_view"
             tools:text="2020-02-08" />

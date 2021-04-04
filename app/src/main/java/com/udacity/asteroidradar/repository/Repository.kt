@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.PictureOfDay
@@ -17,9 +18,37 @@ import org.json.JSONObject
 
 class Repository(private val database: LocalDatabase) {
 
-    val asteroidData: LiveData<List<Asteroid>> =
-        Transformations.map(database.asteroidDao.getAllAsteroids()) { it.toDomainModel()}
+    enum class FilterBy { TODAY, WEEK, SAVED }
 
+    private val filterBy = MutableLiveData(FilterBy.WEEK)
+
+    /*val asteroidData: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidDao.getAllAsteroids()) { it.toDomainModel()}*/
+
+    val asteroidData: LiveData<List<Asteroid>> =
+        Transformations.switchMap(filterBy) { filter ->
+            when (filter) {
+                FilterBy.TODAY ->
+                    Transformations.map(database.asteroidDao.getTodaysAsteroids(DateUtil.today())) {
+                        it.toDomainModel()
+                    }
+                FilterBy.WEEK ->
+                    Transformations.map(
+                        database.asteroidDao.getWeeksAsteroids(
+                            DateUtil.today(),
+                            DateUtil.oneWeekLater()
+                        )
+                    ) { it.toDomainModel() }
+
+                FilterBy.SAVED ->
+                    Transformations.map(database.asteroidDao.getAllAsteroids()) { it.toDomainModel() }
+            }
+
+        }
+
+    fun addFilter(filter: FilterBy) {
+        filterBy.value = filter
+    }
 
 
     val pictureData: LiveData<PictureOfDay> =
